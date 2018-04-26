@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DetailActivityLabel">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="DetailActivityContent">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
