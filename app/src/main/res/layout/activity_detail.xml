@@ -13,13 +13,31 @@
         android:orientation="vertical"
         tools:context="com.udacity.sandwichclub.DetailActivity">
 
-        <ImageView
-            android:id="@+id/image_iv"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_image_height"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/sandwich_picture_content_description"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_iv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_image_height"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/sandwich_picture_content_description"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_label_tv"
+                android:layout_alignBottom="@id/image_iv"
+                android:layout_alignRight="@id/image_iv"
+                android:paddingBottom="4dp"
+                android:paddingRight="8dp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textAllCaps="true"/>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"

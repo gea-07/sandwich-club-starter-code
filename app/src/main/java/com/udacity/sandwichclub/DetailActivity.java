@@ -13,6 +13,7 @@ import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +37,9 @@ public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.description_tv)
     TextView mDescriptionTextView;
+
+    @BindView(R.id.image_label_tv)
+    TextView mImageLabelTextView;
 
 
     @Override
@@ -82,15 +86,40 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
-        setTitle(sandwich.getMainName());
 
-        mAlsoKnownAsTextView.setText(TextUtils.join("\n", sandwich.getAlsoKnownAs()));
+        if (!sandwich.getMainName().isEmpty()) {
+            setTitle(sandwich.getMainName());
+            mImageLabelTextView.setText(sandwich.getMainName());
+        }
 
-        mIngredientsTextView.setText(TextUtils.join("\n", sandwich.getIngredients()));
+        if (!sandwich.getAlsoKnownAs().isEmpty()) {
+            mAlsoKnownAsTextView.setText(TextUtils.join("\n", sandwich.getAlsoKnownAs()));
+        }
+        else {
+            mAlsoKnownAsTextView.setVisibility(TextView.INVISIBLE);
+        }
 
-        mPlaceOfOriginTextView.setText(sandwich.getPlaceOfOrigin());
+        if (!sandwich.getIngredients().isEmpty()) {
+            mIngredientsTextView.setText(TextUtils.join("\n", sandwich.getIngredients()));
+        }
+        else {
+            mIngredientsTextView.setVisibility(TextView.INVISIBLE);
+        }
 
-        mDescriptionTextView.setText(sandwich.getDescription());
+        if (!sandwich.getPlaceOfOrigin().isEmpty()) {
+            mPlaceOfOriginTextView.setText(sandwich.getPlaceOfOrigin());
+        }
+        else {
+            mPlaceOfOriginTextView.setVisibility(TextView.INVISIBLE);
+        }
+
+        if (!sandwich.getDescription().isEmpty()) {
+            mDescriptionTextView.setText(sandwich.getDescription());
+        }
+        else
+        {
+            mDescriptionTextView.setVisibility(TextView.INVISIBLE);
+        }
 
         Picasso.with(this)
                 .load(sandwich.getImage())
