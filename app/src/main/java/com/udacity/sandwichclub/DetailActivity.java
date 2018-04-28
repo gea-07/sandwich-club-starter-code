@@ -3,6 +3,7 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,27 +14,36 @@ import com.udacity.sandwichclub.utils.JsonUtils;
 
 import org.json.JSONException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
-    private ImageView mImageView;
-    private TextView mAlsoKnownAsTextView;
-    private TextView mIngredientsTextView;
-    private TextView mPlaceOfOriginTextView;
-    private TextView mDescriptionTextView;
+
+    @BindView(R.id.image_iv)
+    ImageView mImageView;
+
+    @BindView(R.id.also_known_tv)
+    TextView mAlsoKnownAsTextView;
+
+    @BindView(R.id.ingredients_tv)
+    TextView mIngredientsTextView;
+
+    @BindView(R.id.origin_tv)
+    TextView mPlaceOfOriginTextView;
+
+    @BindView(R.id.description_tv)
+    TextView mDescriptionTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mImageView = (ImageView)findViewById(R.id.image_iv);
-        mAlsoKnownAsTextView = (TextView)findViewById(R.id.also_known_tv);
-        mIngredientsTextView = (TextView)findViewById(R.id.ingredients_tv);
-        mPlaceOfOriginTextView = (TextView)findViewById(R.id.origin_tv);
-        mDescriptionTextView = (TextView)findViewById(R.id.description_tv);
-
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -74,13 +84,9 @@ public class DetailActivity extends AppCompatActivity {
     private void populateUI(Sandwich sandwich) {
         setTitle(sandwich.getMainName());
 
-        for (int i = 0; i < sandwich.getAlsoKnownAs().size(); i++) {
-            mAlsoKnownAsTextView.append(sandwich.getAlsoKnownAs().get(i) + "\n");
-        }
+        mAlsoKnownAsTextView.setText(TextUtils.join("\n", sandwich.getAlsoKnownAs()));
 
-        for (int i = 0; i < sandwich.getIngredients().size(); i++) {
-            mIngredientsTextView.append(sandwich.getIngredients().get(i) + "\n");
-        }
+        mIngredientsTextView.setText(TextUtils.join("\n", sandwich.getIngredients()));
 
         mPlaceOfOriginTextView.setText(sandwich.getPlaceOfOrigin());
 
@@ -88,6 +94,8 @@ public class DetailActivity extends AppCompatActivity {
 
         Picasso.with(this)
                 .load(sandwich.getImage())
+                .placeholder(R.drawable.user_placeholder)
+                .error(R.drawable.user_placeholder_error)
                 .into(mImageView);
 
     }
