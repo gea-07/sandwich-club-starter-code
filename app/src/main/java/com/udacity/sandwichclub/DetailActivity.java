@@ -1,9 +1,12 @@
 package com.udacity.sandwichclub;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +29,26 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.image_iv)
     ImageView mImageView;
 
+    @BindView(R.id.also_known_label_tv)
+    TextView mAlsoKnownAsLabelTextView;
+
     @BindView(R.id.also_known_tv)
     TextView mAlsoKnownAsTextView;
+
+    @BindView(R.id.ingredients_label_tv)
+    TextView mIngredientsLabelTextView;
 
     @BindView(R.id.ingredients_tv)
     TextView mIngredientsTextView;
 
+    @BindView(R.id.origin_label_tv)
+    TextView mPlaceOfOriginLabelTextView;
+
     @BindView(R.id.origin_tv)
     TextView mPlaceOfOriginTextView;
+
+    @BindView(R.id.description_label_tv)
+    TextView mDescriptionLabelTextView;
 
     @BindView(R.id.description_tv)
     TextView mDescriptionTextView;
@@ -77,7 +92,6 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         populateUI(sandwich);
-
     }
 
     private void closeOnError() {
@@ -93,38 +107,49 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         if (!sandwich.getAlsoKnownAs().isEmpty()) {
+            mAlsoKnownAsLabelTextView.setVisibility(View.VISIBLE);
+            mAlsoKnownAsTextView.setVisibility(View.VISIBLE);
             mAlsoKnownAsTextView.setText(TextUtils.join("\n", sandwich.getAlsoKnownAs()));
         }
         else {
-            mAlsoKnownAsTextView.setVisibility(TextView.INVISIBLE);
+            mAlsoKnownAsLabelTextView.setVisibility(View.GONE);
+            mAlsoKnownAsTextView.setVisibility(View.GONE);
         }
 
         if (!sandwich.getIngredients().isEmpty()) {
+            mIngredientsLabelTextView.setVisibility(View.VISIBLE);
+            mIngredientsTextView.setVisibility(View.VISIBLE);
             mIngredientsTextView.setText(TextUtils.join("\n", sandwich.getIngredients()));
         }
         else {
-            mIngredientsTextView.setVisibility(TextView.INVISIBLE);
+            mIngredientsLabelTextView.setVisibility(View.GONE);
+            mIngredientsTextView.setVisibility(View.GONE);
         }
 
         if (!sandwich.getPlaceOfOrigin().isEmpty()) {
+            mPlaceOfOriginLabelTextView.setVisibility(View.VISIBLE);
+            mPlaceOfOriginTextView.setVisibility(View.VISIBLE);
             mPlaceOfOriginTextView.setText(sandwich.getPlaceOfOrigin());
         }
         else {
-            mPlaceOfOriginTextView.setVisibility(TextView.INVISIBLE);
+            mPlaceOfOriginLabelTextView.setVisibility(View.GONE);
+            mPlaceOfOriginTextView.setVisibility(View.GONE);
         }
 
         if (!sandwich.getDescription().isEmpty()) {
+            mDescriptionLabelTextView.setVisibility(View.VISIBLE);
+            mDescriptionTextView.setVisibility(View.VISIBLE);
             mDescriptionTextView.setText(sandwich.getDescription());
         }
         else
         {
-            mDescriptionTextView.setVisibility(TextView.INVISIBLE);
+            mDescriptionLabelTextView.setVisibility(View.GONE);
+            mDescriptionTextView.setVisibility(View.GONE);
         }
 
         Picasso.with(this)
                 .load(sandwich.getImage())
-                .placeholder(R.drawable.user_placeholder)
-                .error(R.drawable.user_placeholder_error)
+                .placeholder(R.drawable.placeholder)
                 .into(mImageView);
 
     }
